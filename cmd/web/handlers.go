@@ -11,6 +11,7 @@ import (
 )
 
 func (app *application) home(w http.ResponseWriter, r *http.Request) {
+	app.infoLog.Printf("index: %s", r.URL.Path)
 	if r.URL.Path != "/" {
 		app.notFound(w)
 		return
@@ -35,6 +36,7 @@ func (app *application) home(w http.ResponseWriter, r *http.Request) {
 }
 
 func (app *application) showSnippet(w http.ResponseWriter, r *http.Request) {
+	app.infoLog.Printf("get: %s", r.URL.Path)
 	id, err := strconv.Atoi(r.URL.Query().Get("id"))
 	if err != nil || id < 1 {
 		app.notFound(w)
@@ -71,6 +73,7 @@ func (app *application) showSnippet(w http.ResponseWriter, r *http.Request) {
 }
 
 func (app *application) createSnippet(w http.ResponseWriter, r *http.Request) {
+	app.infoLog.Printf("create: %s", r.URL.Path)
 	if r.Method != http.MethodPost {
 		w.Header().Set("Allow", http.MethodPost)
 		app.clientError(w, http.StatusMethodNotAllowed)
@@ -87,3 +90,4 @@ func (app *application) createSnippet(w http.ResponseWriter, r *http.Request) {
 
 	http.Redirect(w, r, fmt.Sprintf("/snippet?id=%d", id), http.StatusSeeOther)
 }
+

@@ -37,6 +37,8 @@ func main() {
 		snippets: &mysql.SnippetModel{DB: db},
 	}
 
+	app.snippets.Setup()
+
 	srv := &http.Server{
 		Addr:     *addr,
 		ErrorLog: errorLog,

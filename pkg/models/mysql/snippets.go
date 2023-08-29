@@ -11,6 +11,22 @@ type SnippetModel struct {
 	DB *sql.DB
 }
 
+func(m* SnippetModel) Setup() {
+	stmt := `
+	CREATE TABLE IF NOT EXISTS snippets (
+		id INT NOT NULL AUTO_INCREMENT,
+		title VARCHAR(100) NOT NULL,
+		content TEXT NOT NULL,
+		created DATETIME NOT NULL,
+		expires DATETIME NOT NULL,
+		PRIMARY KEY (id)
+	)`
+	_, err := m.DB.Exec(stmt)
+	if err != nil {
+		panic(err)
+	}
+}
+
 func (m *SnippetModel) Insert(title, content, expires string) (int, error) {
 	stmt := `INSERT INTO snippets (title, content, created, expires)
 	VALUES(?, ?, UTC_TIMESTAMP(), DATE_ADD(UTC_TIMESTAMP(), INTERVAL ? DAY))`
