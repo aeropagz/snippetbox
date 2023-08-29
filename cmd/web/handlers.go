@@ -10,14 +10,12 @@ import (
 )
 
 func (app *application) home(w http.ResponseWriter, r *http.Request) {
-	app.infoLog.Printf("index: %s", r.URL.Path)
 	if r.URL.Path != "/" {
 		app.notFound(w)
 		return
 	}
 
 	s, err := app.snippets.Latest()
-	app.infoLog.Printf("snippets: %v", s)
 	if err != nil {
 		app.serverError(w, err)
 		return
@@ -29,7 +27,6 @@ func (app *application) home(w http.ResponseWriter, r *http.Request) {
 }
 
 func (app *application) showSnippet(w http.ResponseWriter, r *http.Request) {
-	app.infoLog.Printf("get: %s", r.URL.Path)
 	id, err := strconv.Atoi(r.URL.Query().Get("id"))
 	if err != nil || id < 1 {
 		app.notFound(w)
@@ -52,7 +49,6 @@ func (app *application) showSnippet(w http.ResponseWriter, r *http.Request) {
 }
 
 func (app *application) createSnippet(w http.ResponseWriter, r *http.Request) {
-	app.infoLog.Printf("create: %s", r.URL.Path)
 	if r.Method != http.MethodPost {
 		w.Header().Set("Allow", http.MethodPost)
 		app.clientError(w, http.StatusMethodNotAllowed)
