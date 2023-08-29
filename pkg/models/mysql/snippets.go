@@ -11,7 +11,7 @@ type SnippetModel struct {
 	DB *sql.DB
 }
 
-func(m* SnippetModel) Setup() {
+func (m *SnippetModel) Setup() {
 	stmt := `
 	CREATE TABLE IF NOT EXISTS snippets (
 		id INT NOT NULL AUTO_INCREMENT,
