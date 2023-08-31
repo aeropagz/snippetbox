@@ -11,7 +11,25 @@ type SnippetModel struct {
 	DB *sql.DB
 }
 
-func (m *SnippetModel) Setup() {
+func (m *SnippetModel) SetupUser() {
+	stmt := `
+	CREATE TABLE IF NOT EXISTS users (
+		id INT NOT NULL AUTO_INCREMENT,
+		name VARCHAR(255) NOT NULL,
+		email VARCHAR(255) NOT NULL,
+		hashed_password VARCHAR(60) NOT NULL,
+		created DATETIME NOT NULL,
+		active BOOLEAN NOT NULL DEFAULT TRUE,
+		PRIMARY KEY (id)
+	);
+	`
+	_, err := m.DB.Exec(stmt)
+	if err != nil {
+		panic(err)
+	}
+}
+
+func (m *SnippetModel) SetupSnippets() {
 	stmt := `
 	CREATE TABLE IF NOT EXISTS snippets (
 		id INT NOT NULL AUTO_INCREMENT,
@@ -22,6 +40,7 @@ func (m *SnippetModel) Setup() {
 		PRIMARY KEY (id)
 	)`
 	_, err := m.DB.Exec(stmt)
+
 	if err != nil {
 		panic(err)
 	}
