@@ -3,9 +3,9 @@ package main
 import (
 	"bytes"
 	"fmt"
-	"time"
 	"net/http"
 	"runtime/debug"
+	"time"
 )
 
 func (app *application) serverError(w http.ResponseWriter, err error) {
