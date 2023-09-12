@@ -10,9 +10,11 @@ import (
 )
 
 type templateData struct {
+	CSRFToken string
 	CurrentYear int
 	Flash       string
 	Form        *forms.Form
+	IsAuthenticated bool
 	Snippet     *models.Snippet
 	Snippets    []*models.Snippet
 }
@@ -28,7 +30,7 @@ var functions = template.FuncMap{
 func newTemplateCache(dir string) (map[string]*template.Template, error) {
 	cache := map[string]*template.Template{}
 
-	pages, err := filepath.Glob(filepath.Join(dir, "*.page.tmpl"))
+	pages, err := filepath.Glob(filepath.Join(dir, "*.page.html"))
 	if err != nil {
 		return nil, err
 	}
@@ -40,12 +42,12 @@ func newTemplateCache(dir string) (map[string]*template.Template, error) {
 			return nil, err
 		}
 
-		ts, err = ts.ParseGlob(filepath.Join(dir, "*.layout.tmpl"))
+		ts, err = ts.ParseGlob(filepath.Join(dir, "*.layout.html"))
 		if err != nil {
 			return nil, err
 		}
 
-		ts, err = ts.ParseGlob(filepath.Join(dir, "*.partial.tmpl"))
+		ts, err = ts.ParseGlob(filepath.Join(dir, "*.partial.html"))
 		if err != nil {
 			return nil, err
 		}
