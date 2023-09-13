@@ -5,7 +5,6 @@ import (
 	"net/http"
 	"errors"
 	"context"
-	"os/user"
 
 	"github.com/aeropagz/snippetbox/pkg/models"
 	"github.com/justinas/nosurf"
