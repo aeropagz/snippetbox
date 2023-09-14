@@ -127,7 +127,7 @@ func (app *application) loginUser(w http.ResponseWriter, r *http.Request) {
 	}
 
 	form := forms.New(r.PostForm)
-	id, err := app.users.Authenicate(form.Get("email"), form.Get("password"))
+	id, err := app.users.Authenticate(form.Get("email"), form.Get("password"))
 	if err != nil {
 		if errors.Is(err, models.ErrInvalidCredentials) {
 			form.Errors.Add("generic", "Email or password wrong")

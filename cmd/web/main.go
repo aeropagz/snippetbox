@@ -10,6 +10,7 @@ import (
 	"os"
 	"time"
 
+	"github.com/aeropagz/snippetbox/pkg/models"
 	"github.com/aeropagz/snippetbox/pkg/models/mysql"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/golangcollege/sessions"
@@ -23,8 +24,18 @@ type application struct {
 	errorLog      *log.Logger
 	infoLog       *log.Logger
 	session       *sessions.Session
-	snippets      *mysql.SnippetModel
-	users 			*mysql.UserModel
+	snippets      interface {
+		Insert(string, string, string) (int, error)
+		Get(int) (*models.Snippet, error)
+		Latest() ([]*models.Snippet, error)
+		SetupUser()
+		SetupSnippets()
+	}
+	users 			interface{
+		Insert(string, string, string)  error
+		Authenticate(string, string) (int, error)
+		Get(int) (*models.User, error)
+	}
 	templateCache map[string]*template.Template
 }
 

@@ -7,7 +7,7 @@ import (
 	"strings"
 	"unicode/utf8"
 )
-var EmailRX = regexp.MustCompile(`^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$`)
+var EmailRX = regexp.MustCompile("^[a-zA-Z0-9.!#$%&'*+\\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$")
 
 type Form struct {
 	url.Values
@@ -69,7 +69,7 @@ func (f *Form) MatchesPattern(field string, pattern *regexp.Regexp) {
 		return
 	}
 	if !pattern.MatchString(value) {
-		f.Errors.Add(field, "This is field is invalid")
+		f.Errors.Add(field, "This field is invalid")
 	}
 }
 
